@@ -12,14 +12,16 @@ const petshop = {
         fs.writeFileSync('bancoDados.json', petsAtualizado, 'utf-8');
     },
     listarPets: () => {
+        let textoListaPets = "PETSHOP \n";
 
         bancoDados.pets.forEach((pet) => {
-    
-            console.log(`${pet.nome}, ${pet.idade} anos, ${pet.tipo}, ${pet.raca}, ${(pet.vacinado) ? 'vacinado': 'não vacinado'}`);
+            textoListaPets += (`${pet.nome}, ${pet.idade} anos, ${pet.tipo}, ${pet.raca}, ${(pet.vacinado) ? 'vacinado': 'não vacinado'} \n`);
             pet.servicos.forEach((servico) => {
-                console.log(`${servico.data} - ${servico.nome}`);
+                textoListaPets += (`${servico.data} - ${servico.nome} \n`);
             })
         })
+
+        return textoListaPets;
     },
     vacinarPet: pet => {
         if (!pet.vacinado) {
@@ -53,10 +55,10 @@ const petshop = {
             bancoDados.pets.push(novoPet);
         })
     
-        atualizarBanco();
-        novosPets.forEach((pet) => {
-            console.log(`${pet.nome} foi adicionado com sucesso!`);
-        })
+        petshop.atualizarBanco();
+        //novosPets.forEach((pet) => {
+        //    console.log(`${pet.nome} foi adicionado com sucesso!`);
+        //})
     },
     darBanhoPet: pet => {
         pet.servicos.push({
